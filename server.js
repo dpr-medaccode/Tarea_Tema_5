@@ -5,6 +5,11 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
+const path = require('path');
+
+// Servir la carpeta public como archivos estáticos
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(bodyParser.json());
 app.use(cors());
 
