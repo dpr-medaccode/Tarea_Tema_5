@@ -209,62 +209,62 @@
 
     // Manejo del envío del formulario
     form.addEventListener('submit', async (e) => {
-  e.preventDefault();
+      e.preventDefault();
 
-  // Marcar todos los campos como tocados
-  formState.email.touched = true;
-  formState.subject.touched = true;
-  formState.message.touched = true;
+      // Marcar todos los campos como tocados
+      formState.email.touched = true;
+      formState.subject.touched = true;
+      formState.message.touched = true;
 
-  // Validar todos los campos
-  const emailValid = validateField('email', emailInput.value);
-  const subjectValid = validateField('subject', subjectInput.value);
-  const messageValid = validateField('message', messageInput.value);
+      // Validar todos los campos
+      const emailValid = validateField('email', emailInput.value);
+      const subjectValid = validateField('subject', subjectInput.value);
+      const messageValid = validateField('message', messageInput.value);
 
-  if (emailValid && subjectValid && messageValid) {
-    // Mostrar spinner
-    spinner.classList.remove('hidden');
-    btnText.textContent = 'Enviando...';
-    submitBtn.disabled = true;
+      if (emailValid && subjectValid && messageValid) {
+        // Mostrar spinner
+        spinner.classList.remove('hidden');
+        btnText.textContent = 'Enviando...';
+        submitBtn.disabled = true;
 
-    try {
-      const response = await fetch('http://localhost:3000/send-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: emailInput.value,
-          subject: subjectInput.value,
-          message: messageInput.value
-        })
-      });
+        try {
+          const response = await fetch('/send-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email: emailInput.value,
+              subject: subjectInput.value,
+              message: messageInput.value
+            })
+          });
 
-      const result = await response.json();
+          const result = await response.json();
 
-      if (result.success) {
-        // Éxito: ocultar spinner, mostrar mensaje
-        spinner.classList.add('hidden');
-        btnText.textContent = 'Enviar Mensaje';
-        successMessage.classList.remove('hidden');
+          if (result.success) {
+            // Éxito: ocultar spinner, mostrar mensaje
+            spinner.classList.add('hidden');
+            btnText.textContent = 'Enviar Mensaje';
+            successMessage.classList.remove('hidden');
 
-        form.reset();
-        formState.email = { value: '', valid: false, touched: false };
-        formState.subject = { value: '', valid: false, touched: false };
-        formState.message = { value: '', valid: false, touched: false };
-        updateSubmitButton();
+            form.reset();
+            formState.email = { value: '', valid: false, touched: false };
+            formState.subject = { value: '', valid: false, touched: false };
+            formState.message = { value: '', valid: false, touched: false };
+            updateSubmitButton();
 
-        setTimeout(() => {
-          successMessage.classList.add('hidden');
-        }, 3000);
-      } else {
-        throw new Error('Error enviando el correo');
+            setTimeout(() => {
+              successMessage.classList.add('hidden');
+            }, 3000);
+          } else {
+            throw new Error('Error enviando el correo');
+          }
+        } catch (error) {
+          spinner.classList.add('hidden');
+          btnText.textContent = 'Enviar Mensaje';
+          alert('No se pudo enviar el mensaje. Intenta de nuevo.');
+        }
       }
-    } catch (error) {
-      spinner.classList.add('hidden');
-      btnText.textContent = 'Enviar Mensaje';
-      alert('No se pudo enviar el mensaje. Intenta de nuevo.');
-    }
-  }
-});
+    });
   </script>
 
 </body>
