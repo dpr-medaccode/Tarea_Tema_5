@@ -1,0 +1,5 @@
+En teoría, el programa de la tarea funciona correctamente, pero estoy teniendo problemas con Postmark. Actualmente, el único correo que funciona para enviar los mensajes es el del dominio del colegio (@alu.medac.es).
+
+Cuando intento enviar a otras direcciones (por ejemplo, Gmail), los correos son rechazados debido a la política DMARC y DKIM del dominio. Esto hace que pierda sentido subirlo a Vercel, ya que no se vería el funcionamiento del correo y solo se observaría que no llega el mensaje.
+
+La implementación del programa es correcta; de todas maneras, le enviaré el código y el enlace a Vercel (recordando que, debido a lo explicado, el correo no funcionará).
